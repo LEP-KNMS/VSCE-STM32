@@ -1,0 +1,37 @@
+******************* GDI DUMP => Date : Mon May 29 19:20:25 2023
+
+No ST-Link found after GoToUsbLoader command.
+Wait for the end of USB enumeration then try again.
+**** End of GDI DUMP ****
+******************* GDI DUMP => Date : Mon May 29 19:30:17 2023
+
+Error after GoToUsbLoader command.
+Ensure the hardware is recent enough for the software.
+Try to restart it.
+**** End of GDI DUMP ****
+******************* GDI DUMP => Date : Sat Sep 16 15:49:10 2023
+
+Error after GoToUsbLoader command.
+Ensure the hardware is recent enough for the software.
+Try to restart it.
+**** End of GDI DUMP ****
+******************* GDI DUMP => Date : Sat Sep 16 15:50:29 2023
+
+No ST-Link device detected.
+Please connect it and then retry.
+**** End of GDI DUMP ****
+******************* GDI DUMP => Date : Sat Sep 16 16:00:34 2023
+
+No ST-Link found after GoToUsbLoader command.
+Wait for the end of USB enumeration then try again.
+**** End of GDI DUMP ****
+******************* GDI DUMP => Date : Sat Sep 16 16:00:38 2023
+
+No ST-Link device detected.
+Please connect it and then retry.
+**** End of GDI DUMP ****
+******************* GDI DUMP => Date : Sat Sep 16 16:01:13 2023
+
+No ST-Link found after GoToUsbLoader command.
+Wait for the end of USB enumeration then try again.
+**** End of GDI DUMP ****

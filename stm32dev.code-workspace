@@ -1,0 +1,143 @@
+{
+	"folders": [
+		{
+			"path": "settings"
+		}
+	],
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"cwd": "${fileWorkspaceFolder}",
+				"executable": "./build/main.elf",
+				"name": "Debug Microcontroller",
+				"device": "STM32F405",
+				"runToMain": true,
+				"request": "launch",
+				"type": "cortex-debug",
+				"servertype": "openocd",
+				"searchDir": [
+					"${config:toolsdir}/OpenOCD/tcl"
+				],
+				"configFiles": [
+					"interface/stlink-v2-1.cfg",
+					"target/stm32f4x.cfg",
+				],
+				"armToolchainPath": "${config:toolchain}/bin",
+			},
+		],
+		"compounds": []
+	},
+	"settings": {
+		"compile_threads": "8",
+		"vscehome": "${workspaceFolder:settings}/..",
+		"toolsdir": "${config:vscehome}/tools",
+		"toolchain": "${config:vscehome}/arm-gnu-toolchain",
+		"terminal.integrated.env.windows": {
+			"PATH": "${config:toolsdir}/make;${config:toolchain}/bin;${config:toolsdir}/STM32CubeProgrammer/bin;${config:toolsdir}/OpenOCD;${env:PATH};"
+		},
+		"terminal.integrated.env.linux": {},
+		"C_Cpp.default.cppStandard": "gnu++20",
+		"C_Cpp.default.cStandard": "gnu17",
+		"C_Cpp.default.compilerPath": "${config:toolchain}/bin/arm-none-eabi-gcc.exe",
+		"C_Cpp.default.intelliSenseMode": "gcc-arm",
+		"C_Cpp.default.defines": [
+			"_DEBUG",
+            "UNICODE",
+            "_UNICODE",
+			"USE_FULL_LL_DRIVER",
+			"STM32F405xx",
+			"__GNUC__",
+		],
+		"C_Cpp.default.includePath": [
+			"${workspaceFolder}/**",
+			"${config:toolchain}/arm-none-eabi/include/**"
+		],
+		"C_Cpp.clang_format_style": "{ BasedOnStyle: LLVM, BreakBeforeBraces: Attach, SpaceBeforeParens: Never, IndentWidth: 4 }",
+		"C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, BreakBeforeBraces: Attach, SpaceBeforeParens: Never, IndentWidth: 4 }",
+		"doxdocgen.file.fileOrder": [
+			"file",
+			"author",
+			"version",
+			"date",
+			"brief",
+		],
+		"doxdocgen.generic.authorName": "authorName",
+		"doxdocgen.generic.authorTag": "@author {author}",
+		"doxdocgen.generic.dateFormat": "YYYY/MM/DD",
+		"cortex-debug.openocdPath": "${config:toolsdir}/OpenOCD/openocd",
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Build",
+				"type": "shell",
+				"command": "make",
+				"args": [
+					"-j${config:compile_threads}",
+					"-O"
+				],
+				"group": {
+					"kind": "build"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": ["relative", "${fileWorkspaceFolder}"],
+				},
+				"options": {
+					"cwd": "${fileWorkspaceFolder}"
+				}
+			},
+			{
+				"label": "Clean",
+				"type": "shell",
+				"command": "make",
+				"args": [
+					"clean"
+				],
+				"group": {
+					"kind": "build"
+				},
+				"options": {
+					"cwd": "${fileWorkspaceFolder}"
+				}
+			},
+			{
+				"label": "Flash",
+				"type": "shell",
+				"command": "STM32_Programmer_CLI",
+				"args": [
+					"-c port=SWD -d ${fileWorkspaceFolder}/build/main.bin 0x8000000 -rst"
+				],
+				"group": {
+					"kind": "build"
+				},
+				"options": {
+					"cwd": "${fileWorkspaceFolder}"
+				},
+				"dependsOrder": "sequence",
+				"dependsOn": ["Build"]
+			}
+		],
+		"inputs": [
+			{
+				"type": "pickString",
+				"id": "connectType",
+				"description": "program with",
+				"options": [
+					"SWD",
+					"UART"
+				],
+				"default": "SWD"
+			}
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"cschlosser.doxdocgen",
+			"marus25.cortex-debug"
+		]
+	}
+}
